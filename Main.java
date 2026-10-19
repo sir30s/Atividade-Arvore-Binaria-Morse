@@ -77,6 +77,7 @@ class ArvoreBinaria {
         }
         return atual.sinal;
     }
+
     private No buscarNo(No atual, char letra){
         if(atual == null){
             return null;
@@ -87,6 +88,7 @@ class ArvoreBinaria {
         }
 
         No achou = buscarNo(atual.esquerda, letra);
+
         if(achou != null){
             return achou;
         }
@@ -148,36 +150,28 @@ class ArvoreBinaria {
         return resultado;
     }
 
-    public void imprimir(){
-        imprimirNo(raiz);
-        System.out.println();
+    public void imprimirBonito(){
+        imprimirNoBonito(raiz, "");
+        System.out.println("\n");
     }
 
-    private void imprimirNo(No atual){
+    private void imprimirNoBonito(No atual, String adentro){
         if(atual.valor == ' '){
             System.out.print("@");
-        } else {
-            System.out.print(atual.valor);
+        }else{
+            System.out.print(atual.valor + " -> " + atual.sinal);
         }
 
-        if(atual.esquerda != null || atual.direita != null){
-            System.out.print("(");
-
-            if(atual.esquerda != null){
-                System.out.print(".");
-                imprimirNo(atual.esquerda);
-            }
-            if(atual.esquerda != null && atual.direita != null){
-                System.out.print(" ");
-            }
-            if(atual.direita != null){
-                System.out.print("-");
-                imprimirNo(atual.direita);
-            }
-
-            System.out.print(")");
+        if(atual.esquerda != null){
+            System.out.print("\n" + adentro + "  |___(.)");
+            imprimirNoBonito(atual.esquerda, adentro + "  ");
+        }
+        if(atual.direita != null){
+            System.out.print("\n" + adentro + "  |___(-)");
+            imprimirNoBonito(atual.direita, adentro + "  ");
         }
     }
+
 }
 
 class Main{
@@ -191,14 +185,11 @@ class Main{
         System.out.println(arvore.buscarSinal("..."));
         System.out.println(arvore.buscarSinal("---"));
         System.out.println(arvore.buscarSinal("..."));
-        System.out.println(arvore.buscarSinal(".."));
 
         System.out.println(arvore.buscarSinal("... --- ..."));
-
         System.out.println(arvore.buscarLetra('S'));
-        System.out.println(arvore.buscarLetra('F'));
 
-        arvore.imprimir();
+        arvore.imprimirBonito();
 
         arvore.inserir(".-", 'A');
         arvore.inserir("-...", 'B');
@@ -225,8 +216,6 @@ class Main{
         arvore.inserir("-.--", 'Y');
         arvore.inserir("--..", 'Z');
 
-        arvore.imprimir();
-
         arvore.inserir("-----", '0');
         arvore.inserir(".----", '1');
         arvore.inserir("..---", '2');
@@ -238,7 +227,8 @@ class Main{
         arvore.inserir("---..", '8');
         arvore.inserir("----.", '9');
 
-        arvore.imprimir();
+        arvore.imprimirBonito();
+
     }
 }
 
@@ -248,3 +238,4 @@ class Main{
 // https://stackoverflow.com/questions/34728988/how-to-compare-string-in-java-using-scanner-object
 // https://stackoverflow.com/questions/8964279/coding-a-basic-pretty-printer-for-trees-in-java
 // https://medium.com/devmap/using-binary-trees-and-java-to-decode-and-encode-this-19th-century-messaging-protocol-7a26d7049a11
+// https://www.geeksforgeeks.org/java/preorder-tree-traversal-in-binary-tree-java/ -> pra lembrar do pre-ordem
